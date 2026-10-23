@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portfolio of Kamogelo Madingwana: statistics and data science graduate, honours research on survival models, open to junior and graduate roles.">
+<title>Kamogelo Madingwana Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one left-aligned reading column; hero pairs the intro with a survival-curve plot; case studies are ruled rows with a label rail. */
+:root {
+  color-scheme: dark;
+  --bg: #050409;
+  --surface: #110E1C;
+  --fg: #EEEAF8;
+  --muted: #A8A2BF;
+  --rule: #2B2442;
+  --accent: #A56BFF;
+  --accent-deep: #5B21B6;
+  --accent-ink: #FFFFFF;
+  --ochre: #E3B34A;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bg .sym { position: absolute; font-family: var(--font-mono); color: var(--accent); white-space: nowrap; line-height: 1; }
+.bg svg { position: absolute; fill: none; stroke: var(--accent); stroke-width: 1.4; opacity: 0.2; }
+.bg .fig1 { right: -60px; top: 14%; width: 460px; }
+.bg .fig2 { left: -40px; bottom: 6%; width: 380px; }
+.bg .fig3 { right: 4%; bottom: -30px; width: 340px; }
+@media (max-width: 820px) { .bg .fig1 { width: 280px; } .bg .fig2 { width: 240px; } .bg .fig3 { width: 220px; } }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+  padding-inline: 20px; padding-block: 0 56px;
+}
+.wrap { max-width: 1040px; margin-inline: auto; position: relative; z-index: 1; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; text-wrap: balance; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+.label {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* top bar */
+.bar { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: baseline; padding-block: 20px; border-bottom: 1px solid var(--rule); }
+.bar .mark { font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.bar nav { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 15px; }
+.bar nav a { color: var(--fg); text-decoration: none; padding: 5px 14px; border: 1px solid var(--rule); border-radius: 999px; }
+.bar nav a:hover { background: var(--accent-deep); border-color: var(--accent); color: #fff; }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; padding-block: 56px 48px; align-items: center; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 700; letter-spacing: -0.02em; margin-block: 14px 18px; }
+.hero .lede { font-size: 1.15rem; color: var(--fg); }
+.hero .sub { color: var(--muted); margin-top: 12px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.btn { display: inline-block; padding: 10px 18px; border: 1px solid var(--accent); border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 15px; }
+.btn.primary { background: var(--accent-deep); border-color: var(--accent); color: var(--accent-ink); }
+.btn.ghost { color: var(--accent); }
+.btn:hover { text-decoration: underline; }
+.plot { background: var(--surface); border-radius: 6px; padding: 14px 14px 10px; min-width: 0; }
+.plot svg { display: block; width: 100%; height: auto; }
+.plot figcaption { font-size: 13px; color: var(--muted); padding: 6px 4px 2px; }
+.plot text { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+
+/* sections */
+section { border-top: 1px solid var(--rule); padding-block: 44px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px 40px; }
+section > h2 { font-size: 1.5rem; }
+section > h2 + .label { display: none; }
+.rail { display: flex; flex-direction: column; gap: 6px; }
+.rail h2 { font-size: 1.5rem; }
+.body { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+
+/* case studies */
+.case { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; padding-block: 24px; border-top: 1px solid var(--rule); }
+.case:first-child { border-top: 0; padding-top: 0; }
+.case h3 { font-size: 1.3rem; }
+.case dl { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px 16px; margin: 4px 0 0; }
+.case dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.case dd { margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--font-mono); font-size: 12px; padding: 2px 9px; border: 1px solid var(--rule); border-radius: 3px; color: var(--fg); }
+.tag.hot { border-color: var(--accent); color: var(--accent); }
+
+/* honours */
+.feature { background: var(--surface); border-radius: 6px; padding: 26px; display: flex; flex-direction: column; gap: 14px; }
+.status { align-self: flex-start; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ochre); border: 1px solid var(--ochre); padding: 2px 9px; border-radius: 3px; }
+.feature h3 { font-size: 1.45rem; }
+.models { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.models div { border-top: 2px solid var(--accent); padding-top: 8px; font-size: 15px; }
+.models b { display: block; font-family: var(--font-display); font-size: 1.05rem; }
+.steps { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 6px; }
+
+/* skills */
+.skillgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; }
+.skill { border-top: 2px solid var(--fg); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.skill h3 { font-size: 1.15rem; font-family: var(--font-mono); font-weight: 500; }
+.skill p { font-size: 15.5px; color: var(--muted); }
+
+footer { border-top: 1px solid var(--rule); padding-top: 22px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 14px; color: var(--muted); }
+
+@media (max-width: 820px) {
+  .hero { grid-template-columns: minmax(0, 1fr); padding-block: 36px 32px; }
+  section { grid-template-columns: minmax(0, 1fr); padding-block: 34px; gap: 18px; }
+  .case dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .case dd { margin-bottom: 8px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: background-color .15s, color .15s; }
+}
+body{margin:0}
+</style>
+
+</head>
+<body>
+<div class="bg" id="bg" aria-hidden="true">
+  <svg class="fig1" viewBox="0 0 460 220"><path d="M0 200 C80 200 120 190 160 140 C190 100 205 20 230 20 C255 20 270 100 300 140 C340 190 380 200 460 200"/><line x1="230" y1="20" x2="230" y2="200" stroke-dasharray="4 5"/><line x1="0" y1="200" x2="460" y2="200"/><line x1="160" y1="140" x2="160" y2="200" stroke-dasharray="2 4"/><line x1="300" y1="140" x2="300" y2="200" stroke-dasharray="2 4"/></svg>
+  <svg class="fig2" viewBox="0 0 380 200"><rect x="10" y="150" width="30" height="40"/><rect x="48" y="115" width="30" height="75"/><rect x="86" y="70" width="30" height="120"/><rect x="124" y="30" width="30" height="160"/><rect x="162" y="50" width="30" height="140"/><rect x="200" y="95" width="30" height="95"/><rect x="238" y="135" width="30" height="55"/><rect x="276" y="165" width="30" height="25"/><line x1="0" y1="190" x2="380" y2="190"/></svg>
+  <svg class="fig3" viewBox="0 0 340 220"><line x1="20" y1="200" x2="330" y2="200"/><line x1="20" y1="10" x2="20" y2="200"/><circle cx="50" cy="170" r="4"/><circle cx="80" cy="150" r="4"/><circle cx="105" cy="158" r="4"/><circle cx="140" cy="120" r="4"/><circle cx="170" cy="128" r="4"/><circle cx="200" cy="90" r="4"/><circle cx="230" cy="100" r="4"/><circle cx="260" cy="60" r="4"/><circle cx="295" cy="52" r="4"/><line x1="35" y1="175" x2="310" y2="45" stroke-dasharray="6 4"/></svg>
+</div>
+<div class="wrap">
+  <header class="bar">
+    <span class="mark">Kamogelo Madingwana</span>
+    <nav aria-label="Sections">
+      <a href="#case-studies">Case studies</a>
+      <a href="#honours">Honours research</a>
+      <a href="#skills">Skills</a>
+      <a href="#tutoring">Tutoring</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <span class="label">Statistics and data science · Open to junior and graduate roles</span>
+      <h1>I turn messy data into models people can use.</h1>
+      <p class="lede">BCom graduate in Statistics and Data Science, University of Pretoria (2025). Completed an honours project on survival models for insurance policy lapse data, centred on the Lindley distribution.</p>
+      <p class="sub">Work in R for research, SAS for coursework and Excel for the credit-risk case studies from the Quantify Your Future virtual internship.</p>
+      <div class="links">
+        <a class="btn primary" href="#case-studies">See the work</a>
+        <a class="btn ghost" id="li-top" href="https://www.linkedin.com/in/kamogelo-madingwana-544865242" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <figure class="plot" style="margin:0">
+      <svg id="curve" viewBox="0 0 640 360" role="img" aria-label="Illustrative survival plot: a stepped empirical curve with smooth Weibull and exponential curves fitted over it"></svg>
+      <figcaption>Illustrative simulated curve, not real data. The kind of comparison my honours project is built around.</figcaption>
+    </figure>
+  </div>
+
+  <section id="case-studies">
+    <div class="rail">
+      <h2>Case studies</h2>
+      <span class="label">Quantify Your Future<br>Virtual internship<br>Jan to Feb 2025</span>
+    </div>
+    <div class="body">
+      <p>Four group case studies from the internship, each set by a South African financial brand. All were completed in Excel, with a PowerPoint presentation as the final deliverable. The data is confidential, so this page describes the problems and my approach and shows no figures.</p>
+
+      <article class="case">
+        <h3>Credit model performance assessment <span class="label">FNB</span></h3>
+        <dl>
+          <dt>The question</dt>
+          <dd>Is an existing credit model still doing its job? Compare actual defaults with the defaults the model predicted, and judge the model on standard performance metrics.</dd>
+          <dt>My part</dt>
+          <dd>Exploratory data analysis, summary statistics and plots, then a logistic regression fitted to the experience data.</dd>
+          <dt>Tools</dt>
+          <dd class="tags"><span class="tag hot">Excel</span><span class="tag">Logistic regression</span><span class="tag">Actual vs expected</span><span class="tag">Model metrics</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <h3>Predicting car instalment defaults <span class="label">ChiZeeVee Motors</span></h3>
+        <dl>
+          <dt>The question</dt>
+          <dd>Which customers are likely to miss an instalment in the next 12 months, what drives that risk, how to treat outliers and multicollinearity, and what the dealership can do about it.</dd>
+          <dt>Our output</dt>
+          <dd>Exploratory analysis, a validated and interpretable default model, key risk drivers, and business recommendations that also support at-risk customers.</dd>
+          <dt>Tools</dt>
+          <dd class="tags"><span class="tag hot">Excel</span><span class="tag">Default prediction</span><span class="tag">Outliers</span><span class="tag">Multicollinearity</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <h3>Employee attrition and operational risk <span class="label">Nedbank</span></h3>
+        <dl>
+          <dt>The question</dt>
+          <dd>Why do skilled employees leave, and how does flexible or remote working relate to it? Attrition is treated here as an operational risk for the bank.</dd>
+          <dt>Our output</dt>
+          <dd>A cleaned dataset (structure, missing values, duplicates, inconsistent labels, typos), an analysis, and a recorded video presentation with recommendations backed by the results.</dd>
+          <dt>Tools</dt>
+          <dd class="tags"><span class="tag hot">Excel</span><span class="tag">Data cleaning</span><span class="tag">Analysis</span><span class="tag">Video presentation</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <h3>Exploratory data analysis <span class="label">ABSA</span></h3>
+        <dl>
+          <dt>The question</dt>
+          <dd>What hidden patterns and relationships between variables does the dataset contain?</dd>
+          <dt>My part</dt>
+          <dd>The exploratory data analysis: visualisations and analysis that surface patterns and relationships for the group's findings.</dd>
+          <dt>Tools</dt>
+          <dd class="tags"><span class="tag hot">Excel</span><span class="tag">EDA</span><span class="tag">Visualisation</span></dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section id="honours">
+    <div class="rail">
+      <h2>Honours research</h2>
+      <span class="label">Statistics honours<br>University of Pretoria</span>
+    </div>
+    <div class="body">
+      <div class="feature">
+        <span class="status">Completed 2026</span>
+        <h3>Survival functions in grouped insurance data</h3>
+        <p>Insurance lapse data is usually recorded in grouped time intervals rather than exact times, and many policies are still active when observation ends. The research asks whether the Lindley distribution is a useful alternative to the Exponential, Weibull and Lognormal models for describing how long policies stay active.</p>
+        <div class="models" aria-label="Distributions compared">
+          <div><b>Exponential</b>1 parameter. Constant hazard.</div>
+          <div><b>Lindley</b>1 parameter. Hazard can rise, fall or stay constant, depending on the parameter.</div>
+          <div><b>Weibull</b>2 parameters. The shape parameter sets a rising, falling or constant hazard.</div>
+          <div><b>Lognormal</b>2 parameters. Suits skewed lifetimes. The hazard rises, then falls.</div>
+        </div>
+        <ol class="steps">
+          <li>Estimate parameters by maximum likelihood on grouped data. An event inside an interval contributes S(a) − S(b), and a right-censored policy contributes S(c).</li>
+          <li>Compare the models with log-likelihood, AIC, BIC, goodness-of-fit measures and survival and hazard plots.</li>
+          <li>Run a simulation study across sample sizes of 100, 250 and 500 and censoring levels of 10%, 20% and 30%, judged on bias and mean squared error.</li>
+          <li>Apply the models to insurance policy lapse data from 2017 to 2019.</li>
+          <li>Present the work in an interactive Shiny app with the theory, data application, simulation results and key findings.</li>
+        </ol>
+        <div class="tags"><span class="tag hot">R</span><span class="tag hot">Shiny</span><span class="tag">Survival analysis</span><span class="tag">Grouped MLE</span><span class="tag">Right censoring</span><span class="tag">Simulation</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="rail">
+      <h2>Skills</h2>
+      <span class="label">Where each tool was used</span>
+    </div>
+    <div class="body">
+      <div class="skillgrid">
+        <div class="skill"><h3>R</h3><p>Honours research: grouped maximum likelihood, simulation studies, and an interactive Shiny app.</p></div>
+        <div class="skill"><h3>SAS</h3><p>Used most for university practicals and module assignments across my degree.</p></div>
+        <div class="skill"><h3>Excel</h3><p>All four internship case studies: cleaning, summary statistics, charts and logistic regression.</p></div>
+        <div class="skill"><h3>Methods</h3><p>Exploratory analysis, logistic regression, survival analysis, simulation, data cleaning, model performance assessment.</p></div>
+        <div class="skill"><h3>Communication</h3><p>Group presentations, a recorded video deliverable, and private tutoring in maths and science.</p></div>
+      </div>
+      <p>Code from my honours work and coursework will be published on GitHub.</p>
+      <p><a id="gh" href="https://github.com/YOUR-GITHUB-HANDLE" target="_blank" rel="noopener">GitHub profile</a></p>
+    </div>
+  </section>
+
+  <section id="tutoring">
+    <div class="rail">
+      <h2>Tutoring</h2>
+      <span class="label">Grades 8 to 12</span>
+    </div>
+    <div class="body">
+      <p>I tutor Mathematics and Physical Sciences privately for Grades 8 to 12. Explaining a method clearly to a learner who is stuck is the same skill I use when presenting model results to a non-technical audience.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="rail">
+      <h2>Contact</h2>
+      <span class="label">Open to work</span>
+    </div>
+    <div class="body">
+      <p>I am looking for junior roles and graduate programmes in data analytics, biostatistics and statistics. The best way to reach me is on LinkedIn.</p>
+      <div class="tags"><span class="tag hot">Data analytics</span><span class="tag hot">Biostatistics</span><span class="tag hot">Statistics</span><span class="tag">Junior roles</span><span class="tag">Graduate programmes</span></div>
+      <div class="links" style="margin-top:0">
+        <a class="btn primary" id="li-bottom" href="https://www.linkedin.com/in/kamogelo-madingwana-544865242" target="_blank" rel="noopener">Message me on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Kamogelo Madingwana · Statistics and Data Science</span>
+    <span>Internship data is confidential and is not shown on this page.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var svg = document.getElementById('curve');
+  var W = 640, H = 360, L = 52, R = 20, T = 20, B = 46;
+  var pw = W - L - R, ph = H - T - B, tmax = 12;
+  function X(t) { return L + t * pw / tmax; }
+  function Y(s) { return T + (1 - s) * ph; }
+  var lam = 4.5, k = 1.4, theta = 5.0, lth = 0.4;
+  function lind(t) { return (1 + lth + lth * t) / (1 + lth) * Math.exp(-lth * t); }
+  function weib(t) { return Math.exp(-Math.pow(t / lam, k)); }
+  function expo(t) { return Math.exp(-t / theta); }
+  var n = 16, jitter = [0.2,-0.3,0.4,-0.1,0.3,-0.4,0.1,0.2,-0.3,0.3,-0.2,0.4,-0.1,0.2,-0.3,0.1];
+  var times = [];
+  for (var i = 0; i < n; i++) {
+    var p = (i + 0.5) / n;
+    var t = lam * Math.pow(-Math.log(1 - p), 1 / k) + jitter[i] * 0.5;
+    times.push(Math.max(0.1, Math.min(tmax - 0.2, t)));
+  }
+  times.sort(function (a, b) { return a - b; });
+  var d = 'M' + X(0) + ' ' + Y(1);
+  var s = 1;
+  times.forEach(function (t, i) {
+    d += ' H' + X(t).toFixed(1);
+    s = 1 - (i + 1) / n;
+    d += ' V' + Y(s).toFixed(1);
+  });
+  d += ' H' + X(tmax);
+  function smooth(f) {
+    var out = '';
+    for (var t = 0; t <= tmax + 1e-9; t += 0.2) out += (out ? ' L' : 'M') + X(t).toFixed(1) + ' ' + Y(f(t)).toFixed(1);
+    return out;
+  }
+  var h = '';
+  [0, 0.25, 0.5, 0.75, 1].forEach(function (v) {
+    h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--rule)" stroke-width="1"/>';
+    h += '<text x="' + (L - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + (v === 0 ? '0' : v === 1 ? '1' : v.toFixed(2)) + '</text>';
+  });
+  [0, 3, 6, 9, 12].forEach(function (v) {
+    h += '<text x="' + X(v) + '" y="' + (H - B + 18) + '" text-anchor="middle">' + v + '</text>';
+  });
+  h += '<text x="' + (L + pw / 2) + '" y="' + (H - 8) + '" text-anchor="middle">time</text>';
+  h += '<text x="14" y="' + (T + ph / 2) + '" text-anchor="middle" transform="rotate(-90 14 ' + (T + ph / 2) + ')">S(t)</text>';
+  h += '<path d="' + d + '" fill="none" stroke="var(--fg)" stroke-width="1.6"/>';
+  h += '<path d="' + smooth(expo) + '" fill="none" stroke="var(--ochre)" stroke-width="2" stroke-dasharray="6 5"/>';
+  h += '<path d="' + smooth(lind) + '" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 4"/>';
+  h += '<path d="' + smooth(weib) + '" fill="none" stroke="var(--accent)" stroke-width="2.6"/>';
+  var lx = X(7.2), ly = Y(0.92);
+  h += '<g>';
+  h += '<line x1="' + lx + '" x2="' + (lx + 22) + '" y1="' + ly + '" y2="' + ly + '" stroke="var(--fg)" stroke-width="1.6"/><text x="' + (lx + 28) + '" y="' + (ly + 4) + '">empirical</text>';
+  h += '<line x1="' + lx + '" x2="' + (lx + 22) + '" y1="' + (ly + 18) + '" y2="' + (ly + 18) + '" stroke="var(--accent)" stroke-width="2.6"/><text x="' + (lx + 28) + '" y="' + (ly + 22) + '">Weibull</text>';
+  h += '<line x1="' + lx + '" x2="' + (lx + 22) + '" y1="' + (ly + 36) + '" y2="' + (ly + 36) + '" stroke="var(--ochre)" stroke-width="2" stroke-dasharray="6 5"/><text x="' + (lx + 28) + '" y="' + (ly + 40) + '">exponential</text>';
+  h += '<line x1="' + lx + '" x2="' + (lx + 22) + '" y1="' + (ly + 54) + '" y2="' + (ly + 54) + '" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 4"/><text x="' + (lx + 28) + '" y="' + (ly + 58) + '">Lindley</text>';
+  h += '</g>';
+  svg.innerHTML = h;
+})();
+(function () {
+  var bg = document.getElementById('bg');
+  var syms = ['σ','μ','Σ','β','∫','π','ρ','λ','θ','χ²','x̄','p<0.05','R²','H₀','S(t)','h(t)','ŷ','±','≈','∞','∂','α','n=250','AIC','ln L','E[X]','Var(X)','ε','Φ','√n'];
+  var cols = 6, rows = 6, i, r;
+  function rnd(k) { r = Math.sin(k * 12.9898) * 43758.5453; return r - Math.floor(r); }
+  for (i = 0; i < cols * rows; i++) {
+    var cx = (i % cols), cy = Math.floor(i / cols);
+    var el = document.createElement('span');
+    el.className = 'sym';
+    el.textContent = syms[i % syms.length];
+    el.style.left = ((cx + 0.15 + rnd(i + 1) * 0.7) / cols * 100).toFixed(1) + '%';
+    el.style.top = ((cy + 0.15 + rnd(i + 50) * 0.7) / rows * 100).toFixed(1) + '%';
+    el.style.fontSize = (20 + Math.floor(rnd(i + 99) * 34)) + 'px';
+    el.style.opacity = (0.08 + rnd(i + 7) * 0.09).toFixed(2);
+    el.style.transform = 'rotate(' + Math.floor(rnd(i + 3) * 50 - 25) + 'deg)';
+    bg.appendChild(el);
+  }
+})();
+</script>
+
+</body>
+</html>
